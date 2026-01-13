@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>مدمج</title>
+
+  <script src="libs/aframe.min.js"></script>
+<script src="libs/mindar-image-aframe.prod.js"></script>
+</head>
+
+<body style="margin:0">
+  <a-scene
+    mindar-image="imageTargetSrc: assets/target.mind; autoStart: true;"
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: true">
+
+    <a-assets>
+      <img id="overlayImg" src="assets/overlay.png" />
+    </a-assets>
+
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <a-entity mindar-image-target="targetIndex: 0">
+      <a-image src="#overlayImg" position="0 0 0" width="1.35" height="0.80"></a-image>
+
+      <a-text value="مدمج: الواقعي + الافتراضي معًا في شاشة واحدة"
+              position="0 -0.6 0" align="center" width="2"
+              color="#111" background-color="#fff"></a-text>
+    </a-entity>
+  </a-scene>
+</body>
+</html>
