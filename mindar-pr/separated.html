@@ -3,25 +3,49 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>منفصل</title>
+  <title>النمط المنفصل</title>
 
   <script src="libs/aframe.min.js"></script>
-<script src="libs/mindar-image-aframe.prod.js"></script>
+  <script src="libs/mindar-image-aframe.prod.js"></script>
 
   <style>
-    body{ margin:0; font-family: Arial, sans-serif; }
-    #fsVideo{ position:fixed; inset:0; background:#000; z-index:9999; display:none; }
-    #fsVideo button{ position:absolute; top:12px; right:12px; z-index:10000; background:#fff; border:0; padding:10px 12px; border-radius:10px; cursor:pointer; }
-    #lessonVideo{ width:100%; height:100%; }
+    body { margin:0; font-family: Arial, sans-serif; }
+    .topbar{
+      position: fixed; top: 10px; left: 10px; right: 10px;
+      z-index: 9999; display:flex; gap:10px; justify-content: space-between;
+    }
+    .btn{
+      background:#111; color:#fff; border:none; padding:10px 12px; border-radius:10px; cursor:pointer;
+      opacity:.92;
+    }
+    .panel{
+      position: fixed; left: 10px; right: 10px; bottom: 10px;
+      background: rgba(255,255,255,.96);
+      border-radius: 14px;
+      padding: 12px 14px;
+      z-index: 9999;
+      line-height: 1.7;
+      box-shadow: 0 6px 24px rgba(0,0,0,.15);
+    }
+    .panel h4{ margin: 0 0 6px 0; }
+    .panel p{ margin:0; color:#222; }
   </style>
 </head>
 
 <body>
-  <div id="fsVideo">
-    <button onclick="closeFS()">رجوع</button>
-    <video id="lessonVideo" controls playsinline>
-      <source src="assets/lesson.mp4" type="video/mp4">
-    </video>
+  <div class="topbar">
+    <button class="btn" onclick="location.href='index.html'">رجوع</button>
+    <button class="btn" onclick="alert('المنفصل: الشرح خارج AR في لوحة منفصلة')">تعريف</button>
+  </div>
+
+  <div class="panel">
+    <h4>شرح منفصل (خارج المشهد المعزز)</h4>
+    <p>
+      1) اختر فيديو وايت بورد مناسب (قصير وواضح).<br>
+      2) حمّله بصيغة MP4.<br>
+      3) نظّم الملف داخل مجلد Whiteboard Videos.<br>
+      4) اختبر تشغيله قبل الاستخدام لاحقًا في الإنتاج.
+    </p>
   </div>
 
   <a-scene
@@ -30,25 +54,10 @@
     device-orientation-permission-ui="enabled: true">
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-    <a-entity id="target" mindar-image-target="targetIndex: 0"></a-entity>
-  </a-scene>
 
-  <script>
-    function openFS(){
-      document.getElementById('fsVideo').style.display = 'block';
-      const v = document.getElementById('lessonVideo');
-      v.currentTime = 0;
-      v.play().catch(()=>{});
-    }
-    function closeFS(){
-      const v = document.getElementById('lessonVideo');
-      v.pause();
-      document.getElementById('fsVideo').style.display = 'none';
-    }
-    document.addEventListener("DOMContentLoaded", () => {
-      const targetEntity = document.getElementById("target");
-      targetEntity.addEventListener("targetFound", () => openFS());
-    });
-  </script>
+    <a-entity mindar-image-target="targetIndex: 0">
+      <a-text value="✅ تم التعرف على الهدف" position="0 0 0" align="center" width="2" color="#111"></a-text>
+    </a-entity>
+  </a-scene>
 </body>
 </html>
