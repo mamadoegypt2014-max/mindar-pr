@@ -3,75 +3,71 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>مدمج</title>
+  <title>النمط المدمج</title>
 
+  <!-- Offline libs -->
   <script src="libs/aframe.min.js"></script>
-<script src="libs/mindar-image-aframe.prod.js"></script>
+  <script src="libs/mindar-image-aframe.prod.js"></script>
+
+  <style>
+    .topbar{
+      position: fixed; top: 10px; left: 10px; right: 10px;
+      z-index: 9999; display:flex; gap:10px; justify-content: space-between;
+    }
+    .btn{
+      background:#111; color:#fff; border:none; padding:10px 12px; border-radius:10px; cursor:pointer;
+      opacity:.92;
+    }
+  </style>
 </head>
 
-<body style="margin:0">
- <button id="playBtn"
-  style="position:fixed;z-index:9999;top:60px;right:10px;padding:10px 12px;border-radius:10px;border:none;background:#111;color:#fff;">
-  تشغيل الفيديو
-</button>
+<body>
+  <div class="topbar">
+    <button class="btn" onclick="location.href='index.html'">رجوع</button>
+    <button class="btn" id="playBtn">تشغيل الفيديو</button>
+  </div>
 
-<script>
-  window.addEventListener("load", () => {
-    const btn = document.getElementById("playBtn");
-    btn.addEventListener("click", async () => {
-      const v = document.getElementById("lessonVid");
-      try {
-        v.muted = true;          // مهم علشان Chrome يسمح بالتشغيل
-        v.playsInline = true;
-        await v.play();          // التشغيل بعد ضغطة = مضمون
-        btn.innerText = "✅ يعمل";
-      } catch (e) {
-        btn.innerText = "❌ جرّب مرة أخرى";
-        console.log(e);
-      }
+  <script>
+    window.addEventListener("load", () => {
+      const btn = document.getElementById("playBtn");
+      btn.addEventListener("click", async () => {
+        const v = document.getElementById("lessonVid");
+        try {
+          v.muted = true;
+          v.playsInline = true;
+          await v.play();
+          btn.textContent = "✅ يعمل";
+        } catch (e) {
+          btn.textContent = "❌ اضغط مرة أخرى";
+          console.log(e);
+        }
+      });
     });
-  });
-</script>
-   <a-scene
+  </script>
+
+  <a-scene
     mindar-image="imageTargetSrc: assets/target.mind; autoStart: true;"
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: true">
 
     <a-assets>
-      <img id="overlayImg" src="assets/overlay.png" />
-  <img id="overlayImg" src="assets/overlay.png" />
-  <video
-    id="lessonVid"
-    src="assets/lesson.mp4"
-    preload="auto"
-    loop
-    muted
-    playsinline
-    webkit-playsinline
-    crossorigin="anonymous"
-  ></video>
+      <video id="lessonVid" src="assets/lesson.mp4" preload="auto" loop muted playsinline webkit-playsinline></video>
     </a-assets>
-     <video id="lessonVid"
-  src="assets/lesson.mp4"
-  preload="auto"
-  loop
-  muted
-  playsinline
-  webkit-playsinline>
-</video>
 
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
     <a-entity mindar-image-target="targetIndex: 0">
-      <a-image src="#overlayImg" position="0 0 0" width="1.35" height="0.80"></a-image>
+      <a-video src="#lessonVid" position="0 0 0" width="1.2" height="0.7"></a-video>
 
-      <a-text value="مدمج: الواقعي + الافتراضي معًا في شاشة واحدة"
-              position="0 -0.6 0" align="center" width="2"
-              color="#111" background-color="#fff"></a-text>
+      <a-text
+        value="مدمج: خطوات التحميل تظهر فوق الهدف داخل المشهد."
+        position="0 -0.6 0"
+        align="center"
+        width="2"
+        color="#111"
+        wrap-count="30">
+      </a-text>
     </a-entity>
   </a-scene>
 </body>
 </html>
-
-
-
