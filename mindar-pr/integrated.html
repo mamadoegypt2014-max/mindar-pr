@@ -10,6 +10,28 @@
 </head>
 
 <body style="margin:0">
+ <button id="playBtn"
+  style="position:fixed;z-index:9999;top:60px;right:10px;padding:10px 12px;border-radius:10px;border:none;background:#111;color:#fff;">
+  تشغيل الفيديو
+</button>
+
+<script>
+  window.addEventListener("load", () => {
+    const btn = document.getElementById("playBtn");
+    btn.addEventListener("click", async () => {
+      const v = document.getElementById("lessonVid");
+      try {
+        v.muted = true;          // مهم علشان Chrome يسمح بالتشغيل
+        v.playsInline = true;
+        await v.play();          // التشغيل بعد ضغطة = مضمون
+        btn.innerText = "✅ يعمل";
+      } catch (e) {
+        btn.innerText = "❌ جرّب مرة أخرى";
+        console.log(e);
+      }
+    });
+  });
+</script>
   <a-scene
     mindar-image="imageTargetSrc: assets/target.mind; autoStart: true;"
     vr-mode-ui="enabled: false"
@@ -42,4 +64,5 @@
   </a-scene>
 </body>
 </html>
+
 
